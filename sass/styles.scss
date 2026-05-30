@@ -1,0 +1,165 @@
+@use "pallete";
+@use "sass:color";
+
+$margin-width: 0.5vw;
+$light-text: pallete.$light;
+$dark-text: pallete.$dark;
+
+body {
+    font-family: 'Courier New', Courier, monospace;
+    color: $light-text;
+    background-color: pallete.$teal;
+}
+
+@mixin movable-window($size) {
+    @include pallete.window(2, pallete.$alternative, 10%);
+    padding: $margin-width*3;
+    margin: $margin-width*3;
+    transition: 0.9s cubic-bezier(0.165, 0.84, 0.44, 1);
+    height: $margin-width*$size;
+    
+    &.active {
+        height: $margin-width*12;
+    }
+    overflow: hidden;
+}
+
+#main {
+    @include movable-window(36)
+}
+
+#forecast-daily, #forecast-hourly {
+    @include movable-window(52)
+}
+
+.header {
+    font-weight: bold;
+    font-size: 1.75em;
+    @include pallete.window(2, pallete.$violet, 13%);
+    padding: $margin-width*2;
+    height: $margin-width*7;
+    display: flex;
+    place-items: center;
+
+    #title {
+        flex: 1;
+        h1, h2 {
+            color: $light-text;
+            margin: 0;
+        }
+    }
+    
+    #buttons {
+        display: flex;
+        align-items: center;
+        gap: $margin-width;
+    }
+}
+
+.inside {
+    padding: $margin-width*3;
+    padding-bottom: 0;
+    color: $dark-text;
+}
+
+button {
+    @include pallete.window(2, pallete.$alternative, 13%);
+    color: $dark-text;
+    display: block;
+
+    margin: auto;
+    margin-right: 0;
+
+    width: $margin-width*5;
+    aspect-ratio: 1/1;
+
+    &:hover {
+        @include pallete.window(2, color.adjust(pallete.$alternative, $lightness: -10%), 13%);
+    }
+}
+
+.main-data {
+    display: grid;
+    grid-template-columns: 3fr 2fr 2fr;
+    gap: $margin-width $margin-width*3;
+    align-items: center;
+
+    #right {
+        text-align: right;
+        display: flex;
+        justify-content: flex-end;
+        img {
+            margin-left: $margin-width*2;
+            @include pallete.inset(3, pallete.$alternative, 13%, pallete.$light);
+            width: 100px;
+            aspect-ratio: 1/1;
+        }
+    }
+
+    #left {
+        text-align: left;
+        display:grid;
+        grid-template-columns: 1fr, 3fr;
+        #temperature {
+            font-weight: bold;
+            font-size: 4.5em;
+        }
+        #city-state{
+            font-size: 1.75em;
+        }
+    }
+    
+}
+
+.data-array {
+    display: flex;
+    flex-direction: row;
+    @include pallete.vert-margin($margin-width*0.75);
+    padding-bottom: $margin-width*3;
+    overflow: auto;
+    gap: $margin-width*3;
+}
+
+.weather-info {
+    flex-shrink: 0;
+    display: grid;
+    grid-template-columns: 2fr 5fr;
+    gap: $margin-width*2;
+    color: $dark-text;
+    @include pallete.inset(3, pallete.$alternative, 13%, pallete.$alternative);
+    padding: $margin-width * 1.5;
+    width: $margin-width * 13.4;
+    height: $margin-width * 26.8;
+    overflow: hidden;
+    transition: 0.9s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+    &.active {
+        width: $margin-width * 47;
+    }
+
+    #forecast-info {
+        font-size: 0.75em;
+        text-align: justify;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding-right: $margin-width*0.5
+    }
+
+    .weather-thumbnail {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        font-weight: bold;
+
+        #temperature-info {
+            font-size: 1.1em;
+        }
+
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+}
+

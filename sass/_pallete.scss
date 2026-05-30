@@ -1,0 +1,49 @@
+@use "sass:color";
+
+$teal: #218380;
+$alternative: #bac2c7;
+$ruby: #D81159;
+$magenta: #7700B7;
+$violet: #2200CC;
+$background: #0E008F;
+$light: #ffffff;
+$dark: #27282c;
+
+@mixin vert-margin($width) {
+    margin-top: $width;
+    margin-bottom: $width;
+    padding-top: $width;
+    padding-bottom: $width;
+}
+
+@mixin border-3d($color, $contrast, $direction) {
+    $dark: color.adjust($color, $lightness: $contrast*-1);
+    $light: color.adjust($color, $lightness: $contrast);
+    @if $direction == up {
+        border-top-color: $light;
+        border-left-color: $light;
+        border-bottom-color: $dark;
+        border-right-color: $dark;
+    }
+    @else if $direction == down {
+        border-top-color: $dark;
+        border-left-color: $dark;
+        border-bottom-color: $light;
+        border-right-color: $light;
+    }
+    @else {
+        @error "Unknown direction #{$direction}.";
+    }
+} 
+
+@mixin inset($border, $border-color, $contrast, $color) {
+    border: 1px*$border solid;
+    @include border-3d($border-color, $contrast, down);
+    background-color: $color;
+}
+
+@mixin window($border, $color, $contrast) {
+    border: 1px*$border solid;
+    @include border-3d($color, $contrast, up);
+    background-color: $color;
+}
