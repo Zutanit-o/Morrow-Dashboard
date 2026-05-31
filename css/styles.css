@@ -147,7 +147,7 @@ button:hover {
 
 .main-data {
   display: grid;
-  grid-template-columns: 3fr 2fr 2fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 0.5vw 1.5vw;
   align-items: center;
 }
@@ -178,6 +178,21 @@ button:hover {
 }
 .main-data #left #city-state {
   font-size: 1.75em;
+}
+.main-data #center {
+  font-size: 1.1em;
+  gap: 1.1vw;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.main-data #center #wind {
+  display: flex;
+  flex-direction: row;
+  gap: 1.1vw;
+}
+.main-data #center #wind div {
+  flex-grow: 1;
 }
 
 .data-array, .weather-graph {

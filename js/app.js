@@ -24,6 +24,31 @@ function parse(string) {
     return final_date
 }
 
+function direction(string) {
+    let direction = string.slice(-2);
+
+    switch (direction) {
+        case "N":
+            return "↑ " + string;
+        case "NE":
+            return "↗ " + string;
+        case "E":
+            return "→ " + string;
+        case "SE":
+            return "↘ " + string;
+        case "S":
+            return "↓ " + string;
+        case "SW":
+            return "↙ " + string;
+        case "W":
+            return "← " + string;
+        case "NW":
+            return "↖ " + string;
+        default:
+            return string;
+    }
+}
+
 let daily_data;
 let hourly_data;
 
@@ -197,8 +222,9 @@ function update_forecast_information(data) {
     document.getElementById("short-forecast").innerText = current_weather.shortForecast;
     document.getElementById("main-image").src = current_weather.icon;
     document.getElementById("date").innerText = parse(current_weather.startTime).date_time;
-    document.getElementById("precipitation").innerText = `Probability of Precipitation: ${current_weather.probabilityOfPrecipitation.value}%`;
-    document.getElementById("wind").innerText = `Wind speed: ${current_weather.windSpeed}`;
+    document.getElementById("precipitation").innerText = `Probability of Precipitation:\n${current_weather.probabilityOfPrecipitation.value}%`;
+    document.getElementById("wind-speed").innerText = `Wind Speed:\n${current_weather.windSpeed}`;
+    document.getElementById("wind-direction").innerText = `Wind Direction:\n${direction(current_weather.windDirection)}`;
 
     document.getElementById("daily-forecast").innerHTML = "";
     for(let i = 0; i < ammount; i++) {
