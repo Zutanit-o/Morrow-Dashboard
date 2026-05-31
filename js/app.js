@@ -57,14 +57,14 @@ function update_location(position) {
     localStorage.setItem("user_longitude", user_longitude);
     localStorage.setItem("location_on", "true");
     current_latitude = user_latitude;
-    current_longitude = current_longitude;
+    current_longitude = user_longitude;
 
     // May cause issues with asyc!
     get_weather_data(current_latitude, current_longitude);
 }
 
 function get_weather_data(latitude, longitude) {
-    const NWS_URL = "http://api.weather.gov/points";
+    const NWS_URL = "https://api.weather.gov/points";
 
     fetch(`${NWS_URL}/${latitude},${longitude}`, {
         headers: MORROW_HEADER
@@ -155,9 +155,6 @@ function update_hourly_information(data) {
         max = (period.temperature > max) ? period.temperature : max;
         min = (period.temperature < min) ? period.temperature : min;
     }
-
-    console.log(max);
-    console.log(min);
 
     for(let i = 0; i < 12; i++) {
         period = periods[i]
