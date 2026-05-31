@@ -24,6 +24,9 @@ function parse(string) {
     return final_date
 }
 
+let daily_data;
+let hourly_data;
+
 let is_user_location = localStorage.getItem("location_on");
 let current_latitude = 38.6362;
 let current_longitude = -90.3093;
@@ -121,6 +124,7 @@ function update_weather_information(data) {
     .then((data) => {
         console.log(data);
         update_forecast_information(data);
+        daily_data = data;
     })
 
     fetch(hourly_url, {
@@ -131,11 +135,12 @@ function update_weather_information(data) {
     })
     .then((data) => {
         console.log(data);
-        update_hourly_information(data);
+        update_hourly_information(data, 0);
+        hourly_data = data;
     })
 }
 
-function update_hourly_information(data) {
+function update_hourly_information(data, day) {
     let periods = data.properties.periods;
 
     document.getElementById("hourly-forecast").innerHTML = "";
@@ -144,12 +149,14 @@ function update_hourly_information(data) {
     let min = 200;
 
     for(let i = 0; i < 12; i++) {
-        period = periods[i];
+        period = periods[i + day*12];
+        console.log(periods[i + day*12])
         show_weather_snippet("hourly-forecast", 
                             period.temperature,
                             period.shortForecast,
                             period.icon,
-                            parse(period.startTime).time
+                            parse(period.startTime).time,
+                            data,
         );
 
         max = (period.temperature > max) ? period.temperature : max;
@@ -157,13 +164,14 @@ function update_hourly_information(data) {
     }
 
     for(let i = 0; i < 12; i++) {
-        period = periods[i]
+        period = periods[i + day*12];
         show_column("hourly-graph", (period.temperature - min) * (MAX_GRAPH - MIN_GRAPH) / (max - min) + MIN_GRAPH);
     }
 }
 
 function update_forecast_information(data) {
     let periods = data.properties.periods;
+    let ammount = periods.length;
     let current_weather = periods[0];
 
     document.getElementById("temperature").innerText = `${current_weather.temperature} ºF`;
@@ -174,12 +182,14 @@ function update_forecast_information(data) {
     document.getElementById("wind").innerText = `Wind speed: ${current_weather.windSpeed}`;
 
     document.getElementById("daily-forecast").innerHTML = "";
-    for(period of periods) {
+    for(let i = 0; i < ammount; i++) {
+        let period = periods[i]
         show_weather_snippet("daily-forecast", 
                             period.temperature, 
                             period.detailedForecast,
                             period.icon,
-                            period.name);
+                            period.name,
+                            i);
     }
 
 }
@@ -195,7 +205,7 @@ function show_column(location, value) {
     clone_location.appendChild(clone);
 }
 
-function show_weather_snippet(location, temperature_info, forecast_info, image, date) {
+function show_weather_snippet(location, temperature_info, forecast_info, image, date, period) {
     let template = document.getElementById("template-1");
     let clone = template.content.cloneNode(true);
     let weather_window = clone.querySelector('.weather-info');
@@ -209,6 +219,7 @@ function show_weather_snippet(location, temperature_info, forecast_info, image, 
 
     weather_button.addEventListener('click', () => {
         weather_window.classList.toggle('active');
+        update_hourly_information(hourly_data, period);
     });
 
     temperature.innerText = temperature_info + ' ºF';

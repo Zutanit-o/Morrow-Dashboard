@@ -147,7 +147,7 @@ button {
     transition: 0.9s cubic-bezier(0.165, 0.84, 0.44, 1);
 
     &.active {
-        width: $margin-width * 39;
+        width: $margin-width * 37;
     }
 
     #forecast-info {
@@ -201,3 +201,17 @@ button {
     }
 }
 
+header {
+    font-weight: bold;
+    text-align: center;
+    h1 {
+        font-size: 5.5em;
+        animation: tilt 1s infinite alternate;
+    }
+    
+}
+
+@keyframes tilt {
+    from { transform: rotate(5deg); }
+    to { transform: rotate(-5deg); }
+}

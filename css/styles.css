@@ -211,7 +211,7 @@ button:hover {
   transition: 0.9s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 .daily-forecast.active {
-  width: 19.5vw;
+  width: 18.5vw;
 }
 .daily-forecast #forecast-info {
   font-size: 0.75em;
@@ -266,6 +266,24 @@ button:hover {
 }
 .hourly-forecast button, .hourly-forecast #forecast-info {
   display: none;
+}
+
+header {
+  font-weight: bold;
+  text-align: center;
+}
+header h1 {
+  font-size: 5.5em;
+  animation: tilt 1s infinite alternate;
+}
+
+@keyframes tilt {
+  from {
+    transform: rotate(5deg);
+  }
+  to {
+    transform: rotate(-5deg);
+  }
 }
 
 /*# sourceMappingURL=styles.css.map */
