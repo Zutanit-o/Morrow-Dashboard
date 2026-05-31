@@ -28,8 +28,21 @@ body {
     @include movable-window(36)
 }
 
-#forecast-daily, #forecast-hourly {
+#forecast-daily {
     @include movable-window(52)
+}
+
+#forecast-hourly {
+    @include movable-window(52)
+}
+
+#map-container {
+    @include movable-window(75);
+
+    #map { 
+        height: 360px;
+        @include pallete.inset(3, pallete.$alternative, 13%, pallete.$light);
+    }
 }
 
 .header {
@@ -120,7 +133,7 @@ button {
     gap: $margin-width*3;
 }
 
-.weather-info {
+.daily-forecast {
     flex-shrink: 0;
     display: grid;
     grid-template-columns: 2fr 5fr;
@@ -134,7 +147,7 @@ button {
     transition: 0.9s cubic-bezier(0.165, 0.84, 0.44, 1);
 
     &.active {
-        width: $margin-width * 47;
+        width: $margin-width * 39;
     }
 
     #forecast-info {
@@ -160,6 +173,31 @@ button {
             margin-left: auto;
             margin-right: auto;
         }
+    }
+}
+
+.weather-graph {
+    @extend .data-array;
+    @include pallete.inset(3, pallete.$alternative, 13%, pallete.$light);
+    padding: 0;
+    .square {
+        flex-grow: 1;
+        padding: $margin-width;
+        background-color: pallete.$background;
+        margin-top: auto;
+    }
+}
+
+.hourly-forecast {
+    color: $dark-text;
+    @include pallete.inset(3, pallete.$alternative, 13%, pallete.$alternative);
+    flex-direction: column;
+    flex-grow: 1;
+    align-items: center;
+    text-align: center;
+
+    button, #forecast-info {
+        display: none;
     }
 }
 

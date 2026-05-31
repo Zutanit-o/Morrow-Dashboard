@@ -1,4 +1,4 @@
-const ids = ['main', 'forecast-daily', 'forecast-hourly'];
+const ids = ['main', 'forecast-daily', 'forecast-hourly', 'map-container'];
 
 for (const id of ids) {
     let element_id = `close-${id}`;

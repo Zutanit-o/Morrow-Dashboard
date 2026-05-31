@@ -12,11 +12,11 @@
         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
             crossorigin=""></script>
-        <script src="js/app.js"></script>
+        <script defer src="js/app.js"></script>
         <script defer src="js/events.js"></script>
     </head>
     <body>
-        <template>
+        <template id="template-1">
             <div class="weather-info">
                 <div class="weather-thumbnail">
                     <div id="temperature-info">
@@ -35,6 +35,12 @@
                 </div>
             </div>
         </template>
+
+        <template id="template-2">
+            <div class="square">
+            </div>
+        </template>
+
         <div id="main">
             <div class="header">
                 <div id="title">
@@ -81,6 +87,28 @@
                 </div>
             </div>
         </div>
+        <div id="forecast-hourly">
+            <div class="header">
+                <div id="title">
+                    <h2>
+                        Hourly Forecast
+                    </h2>
+                </div>
+                <div id="buttons">
+                    <button id="close-forecast-hourly">
+                        X
+                    </button>
+                
+                    <button>
+                        □
+                    </button>
+                </div>
+            </div>
+            <div class="inside">
+                <div class="weather-graph" id="hourly-graph"></div>
+                <div class="data-array" id="hourly-forecast"></div>
+            </div>
+        </div>
         <div id="forecast-daily">
             <div class="header">
                 <div id="title">
@@ -99,7 +127,28 @@
                 </div>
             </div>
             <div class="inside">
-                <div class="data-array" id="daily_forecast"></div>
+                <div class="data-array" id="daily-forecast"></div>
+            </div>
+        </div>
+        <div id="map-container">
+            <div class="header">
+                <div id="title">
+                    <h2>
+                        Select Location
+                    </h2>
+                </div>
+                <div id="buttons">
+                    <button id="close-map-container">
+                        X
+                    </button>
+                
+                    <button>
+                        □
+                    </button>
+                </div>
+            </div>
+            <div class="inside">
+                <div id="map"></div>
             </div>
         </div>
     </body>

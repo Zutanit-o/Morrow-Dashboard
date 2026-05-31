@@ -9,6 +9,7 @@ function parse(string) {
     let zone = date_time[1].slice(9).split(':');
 
     let coefficient = (date_time[1][8] == '-') ? -1 : 1;
+    coefficient = 0;
 
     let hour = parseInt(time[0], 10) + (coefficient * parseInt(zone[0], 10));
     let minute = parseInt(time[1], 10) + (coefficient * parseInt(zone[1], 10));
@@ -28,6 +29,10 @@ let current_latitude = 38.6362;
 let current_longitude = -90.3093;
 let default_coordinates = `${current_latitude},${current_longitude}`
 const MORROW_HEADER = new Headers({"User-Agent": "Morrowbot/1.0 (+contactocarlose@gmail.com)"});
+
+const MIN_GRAPH = 3;
+const MAX_GRAPH = 105;
+
 
 if (is_user_location === null) {
     if ("geolocation" in navigator) {
@@ -70,6 +75,30 @@ function get_weather_data(latitude, longitude) {
     .then((data) => {
         console.log(data);
         update_weather_information(data);
+
+
+        var initialized = false;
+        if (!initialized) {
+            var map = L.map('map').setView([latitude, longitude], 13);
+            map.on('click', onMapClick);
+            var marker = L.marker([latitude, longitude]).addTo(map);
+        }
+        
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+            referrerPolicy: 'no-referrer-when-downgrade'
+        }).addTo(map);
+
+        function onMapClick(e) {
+            let location = e.latlng;
+            marker.setLatLng(location);
+
+            localStorage.setItem("user_latitude", location.lat);
+            localStorage.setItem("user_longitude", location.lng);
+            get_weather_data(location.lat, location.lng);
+        }
+        
     });
 }
 
@@ -107,7 +136,33 @@ function update_weather_information(data) {
 }
 
 function update_hourly_information(data) {
+    let periods = data.properties.periods;
 
+    document.getElementById("hourly-forecast").innerHTML = "";
+    document.getElementById("hourly-graph").innerHTML = "";
+    let max = -100;
+    let min = 200;
+
+    for(let i = 0; i < 12; i++) {
+        period = periods[i];
+        show_weather_snippet("hourly-forecast", 
+                            period.temperature,
+                            period.shortForecast,
+                            period.icon,
+                            parse(period.startTime).time
+        );
+
+        max = (period.temperature > max) ? period.temperature : max;
+        min = (period.temperature < min) ? period.temperature : min;
+    }
+
+    console.log(max);
+    console.log(min);
+
+    for(let i = 0; i < 12; i++) {
+        period = periods[i]
+        show_column("hourly-graph", (period.temperature - min) * (MAX_GRAPH - MIN_GRAPH) / (max - min) + MIN_GRAPH);
+    }
 }
 
 function update_forecast_information(data) {
@@ -121,8 +176,9 @@ function update_forecast_information(data) {
     document.getElementById("precipitation").innerText = `Probability of Precipitation: ${current_weather.probabilityOfPrecipitation.value}%`;
     document.getElementById("wind").innerText = `Wind speed: ${current_weather.windSpeed}`;
 
+    document.getElementById("daily-forecast").innerHTML = "";
     for(period of periods) {
-        show_weather_snippet("daily_forecast", 
+        show_weather_snippet("daily-forecast", 
                             period.temperature, 
                             period.detailedForecast,
                             period.icon,
@@ -131,10 +187,22 @@ function update_forecast_information(data) {
 
 }
 
+function show_column(location, value) {
+    let template = document.getElementById("template-2");
+    let clone = template.content.cloneNode(true);
+
+    let square = clone.querySelector('.square');
+    square.style.height = value + "px";
+
+    let clone_location = document.getElementById(location);
+    clone_location.appendChild(clone);
+}
+
 function show_weather_snippet(location, temperature_info, forecast_info, image, date) {
-    let template = document.getElementsByTagName("template")[0];
+    let template = document.getElementById("template-1");
     let clone = template.content.cloneNode(true);
     let weather_window = clone.querySelector('.weather-info');
+    weather_window.classList.replace("weather-info", location);
     let temperature = clone.querySelector('#temperature-info');
     let forecast = clone.querySelector('#forecast-info');
     let image_obj = clone.querySelector('#image');
