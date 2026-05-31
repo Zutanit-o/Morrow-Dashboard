@@ -1,5 +1,9 @@
+// Please forgive my spaghetti code
+// Can you count all the magic numbers???
 
-// ISO 8061 PARSER
+// Why did i feel the need to do this in vanilla js
+
+// Parses ISO 8061 formated time and date into prettier strings
 function parse(string) {
     let date_time = string.split('T');
     let date = date_time[0].split('-').join('/');
@@ -8,11 +12,8 @@ function parse(string) {
     let time = date_time[1].slice(0, 5).split(':');
     let zone = date_time[1].slice(9).split(':');
 
-    let coefficient = (date_time[1][8] == '-') ? -1 : 1;
-    coefficient = 0;
-
-    let hour = parseInt(time[0], 10) + (coefficient * parseInt(zone[0], 10));
-    let minute = parseInt(time[1], 10) + (coefficient * parseInt(zone[1], 10));
+    let hour = parseInt(time[0], 10);
+    let minute = parseInt(time[1], 10);
 
     let final_time = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
 
@@ -24,6 +25,7 @@ function parse(string) {
     return final_date
 }
 
+// Utility to turn cardinal directions to arrows
 function direction(string) {
     let direction = string.slice(-2);
 
@@ -52,15 +54,18 @@ function direction(string) {
 let daily_data;
 let hourly_data;
 
+// Sends user to Clayton Missouri by default
 let is_user_location = localStorage.getItem("location_on");
 let current_latitude = 38.6362;
 let current_longitude = -90.3093;
 let default_coordinates = `${current_latitude},${current_longitude}`
+
+// The NWS will email me if something goes wrong
 const MORROW_HEADER = new Headers({"User-Agent": "Morrowbot/1.0 (+contactocarlose@gmail.com)"});
 
+// Initializing leaflet map, events and current location marker
 var map = L.map('map').setView([current_latitude, current_longitude], 13);
 map.on('click', onMapClick);
-
 var marker = L.marker([current_latitude, current_longitude]).addTo(map);
 
 function onMapClick(e) {
@@ -78,10 +83,11 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     referrerPolicy: 'no-referrer-when-downgrade'
 }).addTo(map);
 
+// Pixel constraints for the weather graph
 const MIN_GRAPH = 3;
 const MAX_GRAPH = 105;
 
-
+// Cheking if user location is in local storage
 if (is_user_location === null) {
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(update_location);
@@ -98,6 +104,7 @@ else {
     get_weather_data(user_latitude, user_longitude);
 }
 
+// Updating local storage
 function update_location(position) {
     let user_latitude = position.coords.latitude;
     let user_longitude = position.coords.longitude;
@@ -112,6 +119,7 @@ function update_location(position) {
     get_weather_data(current_latitude, current_longitude);
 }
 
+// Fetching forecast link from the NWS API
 function get_weather_data(latitude, longitude) {
     try {
         document.getElementById('error').remove();
@@ -136,6 +144,7 @@ function get_weather_data(latitude, longitude) {
     });
 }
 
+// If location isnt available, show message on screen
 function location_unavailable() {
     console.log('Error: Location unavailable.');
     document.getElementById('forecast-daily').classList.toggle('hidden');
@@ -145,6 +154,7 @@ function location_unavailable() {
     document.getElementById('main-window-inside').appendChild(clone);
 }
 
+// Fetching daily and hourly forecast with the recieved link
 function update_weather_information(data) {
 
     document.getElementById('forecast-daily').classList.remove('hidden');
@@ -185,6 +195,7 @@ function update_weather_information(data) {
     })
 }
 
+// Updating the hourly forecast frontend section
 function update_hourly_information(data, day) {
     let periods = data.properties.periods;
 
@@ -213,6 +224,7 @@ function update_hourly_information(data, day) {
     }
 }
 
+// Updating the daily forecast frontend section
 function update_forecast_information(data) {
     let periods = data.properties.periods;
     let ammount = periods.length;
@@ -221,7 +233,7 @@ function update_forecast_information(data) {
     document.getElementById("temperature").innerText = `${current_weather.temperature} ºF`;
     document.getElementById("short-forecast").innerText = current_weather.shortForecast;
     document.getElementById("main-image").src = current_weather.icon;
-    document.getElementById("date").innerText = parse(current_weather.startTime).date_time;
+    document.getElementById("date").innerText = `At ${parse(current_weather.startTime).date_time}`;
     document.getElementById("precipitation").innerText = `Probability of Precipitation:\n${current_weather.probabilityOfPrecipitation.value}%`;
     document.getElementById("wind-speed").innerText = `Wind Speed:\n${current_weather.windSpeed}`;
     document.getElementById("wind-direction").innerText = `Wind Direction:\n${direction(current_weather.windDirection)}`;
@@ -239,6 +251,7 @@ function update_forecast_information(data) {
 
 }
 
+// Used to construct the weather graph
 function show_column(location, value) {
     let template = document.getElementById("template-2");
     let clone = template.content.cloneNode(true);
@@ -250,6 +263,7 @@ function show_column(location, value) {
     clone_location.appendChild(clone);
 }
 
+// Used to show the daily weather
 function show_weather_snippet(location, temperature_info, forecast_info, image, date, period) {
     let template = document.getElementById("template-1");
     let clone = template.content.cloneNode(true);
