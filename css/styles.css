@@ -1,0 +1,271 @@
+body {
+  font-family: "Courier New", Courier, monospace;
+  color: #ffffff;
+  background-color: #218380;
+}
+
+#main {
+  border: 2px solid;
+  border-top-color: rgb(214.152, 218.888, 221.848);
+  border-left-color: rgb(214.152, 218.888, 221.848);
+  border-bottom-color: rgb(157.848, 169.112, 176.152);
+  border-right-color: rgb(157.848, 169.112, 176.152);
+  background-color: #bac2c7;
+  padding: 1.5vw;
+  margin: 1.5vw;
+  transition: 0.9s cubic-bezier(0.165, 0.84, 0.44, 1);
+  height: 18vw;
+}
+#main.active {
+  height: 6vw;
+}
+#main {
+  overflow: hidden;
+}
+
+#forecast-daily {
+  border: 2px solid;
+  border-top-color: rgb(214.152, 218.888, 221.848);
+  border-left-color: rgb(214.152, 218.888, 221.848);
+  border-bottom-color: rgb(157.848, 169.112, 176.152);
+  border-right-color: rgb(157.848, 169.112, 176.152);
+  background-color: #bac2c7;
+  padding: 1.5vw;
+  margin: 1.5vw;
+  transition: 0.9s cubic-bezier(0.165, 0.84, 0.44, 1);
+  height: 26vw;
+}
+#forecast-daily.active {
+  height: 6vw;
+}
+#forecast-daily {
+  overflow: hidden;
+}
+
+#forecast-hourly {
+  border: 2px solid;
+  border-top-color: rgb(214.152, 218.888, 221.848);
+  border-left-color: rgb(214.152, 218.888, 221.848);
+  border-bottom-color: rgb(157.848, 169.112, 176.152);
+  border-right-color: rgb(157.848, 169.112, 176.152);
+  background-color: #bac2c7;
+  padding: 1.5vw;
+  margin: 1.5vw;
+  transition: 0.9s cubic-bezier(0.165, 0.84, 0.44, 1);
+  height: 26vw;
+}
+#forecast-hourly.active {
+  height: 6vw;
+}
+#forecast-hourly {
+  overflow: hidden;
+}
+
+#map-container {
+  border: 2px solid;
+  border-top-color: rgb(214.152, 218.888, 221.848);
+  border-left-color: rgb(214.152, 218.888, 221.848);
+  border-bottom-color: rgb(157.848, 169.112, 176.152);
+  border-right-color: rgb(157.848, 169.112, 176.152);
+  background-color: #bac2c7;
+  padding: 1.5vw;
+  margin: 1.5vw;
+  transition: 0.9s cubic-bezier(0.165, 0.84, 0.44, 1);
+  height: 37.5vw;
+}
+#map-container.active {
+  height: 6vw;
+}
+#map-container {
+  overflow: hidden;
+}
+#map-container #map {
+  height: 360px;
+  border: 3px solid;
+  border-top-color: rgb(149.4024, 161.6456, 169.2976);
+  border-left-color: rgb(149.4024, 161.6456, 169.2976);
+  border-bottom-color: rgb(222.5976, 226.3544, 228.7024);
+  border-right-color: rgb(222.5976, 226.3544, 228.7024);
+  background-color: #ffffff;
+}
+
+.header {
+  font-weight: bold;
+  font-size: 1.75em;
+  border: 2px solid;
+  border-top-color: rgb(55.25, 15.3, 255);
+  border-left-color: rgb(55.25, 15.3, 255);
+  border-bottom-color: rgb(22.95, 0, 137.7);
+  border-right-color: rgb(22.95, 0, 137.7);
+  background-color: #2200CC;
+  padding: 1vw;
+  height: 3.5vw;
+  display: flex;
+  place-items: center;
+}
+.header #title {
+  flex: 1;
+}
+.header #title h1, .header #title h2 {
+  color: #ffffff;
+  margin: 0;
+}
+.header #buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.5vw;
+}
+
+.inside {
+  padding: 1.5vw;
+  padding-bottom: 0;
+  color: #27282c;
+}
+
+button {
+  border: 2px solid;
+  border-top-color: rgb(222.5976, 226.3544, 228.7024);
+  border-left-color: rgb(222.5976, 226.3544, 228.7024);
+  border-bottom-color: rgb(149.4024, 161.6456, 169.2976);
+  border-right-color: rgb(149.4024, 161.6456, 169.2976);
+  background-color: #bac2c7;
+  color: #27282c;
+  display: block;
+  margin: auto;
+  margin-right: 0;
+  width: 2.5vw;
+  aspect-ratio: 1/1;
+}
+button:hover {
+  border: 2px solid;
+  border-top-color: rgb(194.4456, 201.4664, 205.8544);
+  border-left-color: rgb(194.4456, 201.4664, 205.8544);
+  border-bottom-color: rgb(121.2504, 136.7576, 146.4496);
+  border-right-color: rgb(121.2504, 136.7576, 146.4496);
+  background-color: rgb(157.848, 169.112, 176.152);
+}
+
+.main-data {
+  display: grid;
+  grid-template-columns: 3fr 2fr 2fr;
+  gap: 0.5vw 1.5vw;
+  align-items: center;
+}
+.main-data #right {
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+}
+.main-data #right img {
+  margin-left: 1vw;
+  border: 3px solid;
+  border-top-color: rgb(149.4024, 161.6456, 169.2976);
+  border-left-color: rgb(149.4024, 161.6456, 169.2976);
+  border-bottom-color: rgb(222.5976, 226.3544, 228.7024);
+  border-right-color: rgb(222.5976, 226.3544, 228.7024);
+  background-color: #ffffff;
+  width: 100px;
+  aspect-ratio: 1/1;
+}
+.main-data #left {
+  text-align: left;
+  display: grid;
+  grid-template-columns: 1fr, 3fr;
+}
+.main-data #left #temperature {
+  font-weight: bold;
+  font-size: 4.5em;
+}
+.main-data #left #city-state {
+  font-size: 1.75em;
+}
+
+.data-array, .weather-graph {
+  display: flex;
+  flex-direction: row;
+  margin-top: 0.375vw;
+  margin-bottom: 0.375vw;
+  padding-top: 0.375vw;
+  padding-bottom: 0.375vw;
+  padding-bottom: 1.5vw;
+  overflow: auto;
+  gap: 1.5vw;
+}
+
+.daily-forecast {
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: 2fr 5fr;
+  gap: 1vw;
+  color: #27282c;
+  border: 3px solid;
+  border-top-color: rgb(149.4024, 161.6456, 169.2976);
+  border-left-color: rgb(149.4024, 161.6456, 169.2976);
+  border-bottom-color: rgb(222.5976, 226.3544, 228.7024);
+  border-right-color: rgb(222.5976, 226.3544, 228.7024);
+  background-color: #bac2c7;
+  padding: 0.75vw;
+  width: 6.7vw;
+  height: 13.4vw;
+  overflow: hidden;
+  transition: 0.9s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.daily-forecast.active {
+  width: 19.5vw;
+}
+.daily-forecast #forecast-info {
+  font-size: 0.75em;
+  text-align: justify;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 0.25vw;
+}
+.daily-forecast .weather-thumbnail {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font-weight: bold;
+}
+.daily-forecast .weather-thumbnail #temperature-info {
+  font-size: 1.1em;
+}
+.daily-forecast .weather-thumbnail img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.weather-graph {
+  border: 3px solid;
+  border-top-color: rgb(149.4024, 161.6456, 169.2976);
+  border-left-color: rgb(149.4024, 161.6456, 169.2976);
+  border-bottom-color: rgb(222.5976, 226.3544, 228.7024);
+  border-right-color: rgb(222.5976, 226.3544, 228.7024);
+  background-color: #ffffff;
+  padding: 0;
+}
+.weather-graph .square {
+  flex-grow: 1;
+  padding: 0.5vw;
+  background-color: #0E008F;
+  margin-top: auto;
+}
+
+.hourly-forecast {
+  color: #27282c;
+  border: 3px solid;
+  border-top-color: rgb(149.4024, 161.6456, 169.2976);
+  border-left-color: rgb(149.4024, 161.6456, 169.2976);
+  border-bottom-color: rgb(222.5976, 226.3544, 228.7024);
+  border-right-color: rgb(222.5976, 226.3544, 228.7024);
+  background-color: #bac2c7;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  text-align: center;
+}
+.hourly-forecast button, .hourly-forecast #forecast-info {
+  display: none;
+}
+
+/*# sourceMappingURL=styles.css.map */
