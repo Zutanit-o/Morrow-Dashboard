@@ -14,7 +14,7 @@ body {
   padding: 1.5vw;
   margin: 1.5vw;
   transition: 0.9s cubic-bezier(0.165, 0.84, 0.44, 1);
-  height: 18vw;
+  height: 225px;
 }
 #main.active {
   height: 6vw;
@@ -33,7 +33,7 @@ body {
   padding: 1.5vw;
   margin: 1.5vw;
   transition: 0.9s cubic-bezier(0.165, 0.84, 0.44, 1);
-  height: 26vw;
+  height: 325px;
 }
 #forecast-daily.active {
   height: 6vw;
@@ -52,7 +52,7 @@ body {
   padding: 1.5vw;
   margin: 1.5vw;
   transition: 0.9s cubic-bezier(0.165, 0.84, 0.44, 1);
-  height: 26vw;
+  height: 331.25px;
 }
 #forecast-hourly.active {
   height: 6vw;
@@ -71,7 +71,7 @@ body {
   padding: 1.5vw;
   margin: 1.5vw;
   transition: 0.9s cubic-bezier(0.165, 0.84, 0.44, 1);
-  height: 37.5vw;
+  height: 468.75px;
 }
 #map-container.active {
   height: 6vw;
@@ -80,7 +80,7 @@ body {
   overflow: hidden;
 }
 #map-container #map {
-  height: 360px;
+  height: 368.75px;
   border: 3px solid;
   border-top-color: rgb(149.4024, 161.6456, 169.2976);
   border-left-color: rgb(149.4024, 161.6456, 169.2976);
@@ -99,7 +99,7 @@ body {
   border-right-color: rgb(22.95, 0, 137.7);
   background-color: #2200CC;
   padding: 1vw;
-  height: 3.5vw;
+  height: 43.75px;
   display: flex;
   place-items: center;
 }
@@ -205,13 +205,13 @@ button:hover {
   border-right-color: rgb(222.5976, 226.3544, 228.7024);
   background-color: #bac2c7;
   padding: 0.75vw;
-  width: 6.7vw;
-  height: 13.4vw;
+  width: 83.75px;
+  height: 167.5px;
   overflow: hidden;
   transition: 0.9s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 .daily-forecast.active {
-  width: 18.5vw;
+  width: 231.25px;
 }
 .daily-forecast #forecast-info {
   font-size: 0.75em;
@@ -242,6 +242,7 @@ button:hover {
   border-bottom-color: rgb(222.5976, 226.3544, 228.7024);
   border-right-color: rgb(222.5976, 226.3544, 228.7024);
   background-color: #ffffff;
+  height: 118.75px;
   padding: 0;
 }
 .weather-graph .square {
@@ -263,6 +264,7 @@ button:hover {
   flex-grow: 1;
   align-items: center;
   text-align: center;
+  height: 100px;
 }
 .hourly-forecast button, .hourly-forecast #forecast-info {
   display: none;
@@ -275,14 +277,15 @@ header {
 header h1 {
   font-size: 5.5em;
   animation: tilt 1s infinite alternate;
+  margin: 1.5vw;
 }
 
 @keyframes tilt {
   from {
-    transform: rotate(5deg);
+    transform: rotate(4deg);
   }
   to {
-    transform: rotate(-5deg);
+    transform: rotate(-4deg);
   }
 }
 

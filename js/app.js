@@ -150,7 +150,6 @@ function update_hourly_information(data, day) {
 
     for(let i = 0; i < 12; i++) {
         period = periods[i + day*12];
-        console.log(periods[i + day*12])
         show_weather_snippet("hourly-forecast", 
                             period.temperature,
                             period.shortForecast,

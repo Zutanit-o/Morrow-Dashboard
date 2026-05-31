@@ -2,6 +2,7 @@
 @use "sass:color";
 
 $margin-width: 0.5vw;
+$pixel-unit: 6.25px;
 $light-text: pallete.$light;
 $dark-text: pallete.$dark;
 
@@ -16,7 +17,7 @@ body {
     padding: $margin-width*3;
     margin: $margin-width*3;
     transition: 0.9s cubic-bezier(0.165, 0.84, 0.44, 1);
-    height: $margin-width*$size;
+    height: $pixel-unit*$size;
     
     &.active {
         height: $margin-width*12;
@@ -33,14 +34,14 @@ body {
 }
 
 #forecast-hourly {
-    @include movable-window(52)
+    @include movable-window(53)
 }
 
 #map-container {
     @include movable-window(75);
 
     #map { 
-        height: 360px;
+        height: $pixel-unit*59;
         @include pallete.inset(3, pallete.$alternative, 13%, pallete.$light);
     }
 }
@@ -50,7 +51,7 @@ body {
     font-size: 1.75em;
     @include pallete.window(2, pallete.$violet, 13%);
     padding: $margin-width*2;
-    height: $margin-width*7;
+    height: $pixel-unit*7;
     display: flex;
     place-items: center;
 
@@ -141,13 +142,13 @@ button {
     color: $dark-text;
     @include pallete.inset(3, pallete.$alternative, 13%, pallete.$alternative);
     padding: $margin-width * 1.5;
-    width: $margin-width * 13.4;
-    height: $margin-width * 26.8;
+    width: $pixel-unit * 13.4;
+    height: $pixel-unit * 26.8;
     overflow: hidden;
     transition: 0.9s cubic-bezier(0.165, 0.84, 0.44, 1);
 
     &.active {
-        width: $margin-width * 37;
+        width: $pixel-unit * 37;
     }
 
     #forecast-info {
@@ -179,6 +180,7 @@ button {
 .weather-graph {
     @extend .data-array;
     @include pallete.inset(3, pallete.$alternative, 13%, pallete.$light);
+    height: $pixel-unit * 19;
     padding: 0;
     .square {
         flex-grow: 1;
@@ -195,6 +197,7 @@ button {
     flex-grow: 1;
     align-items: center;
     text-align: center;
+    height: $pixel-unit * 16;
 
     button, #forecast-info {
         display: none;
@@ -207,11 +210,12 @@ header {
     h1 {
         font-size: 5.5em;
         animation: tilt 1s infinite alternate;
+        margin: $margin-width*3;
     }
     
 }
 
 @keyframes tilt {
-    from { transform: rotate(5deg); }
-    to { transform: rotate(-5deg); }
+    from { transform: rotate(4deg); }
+    to { transform: rotate(-4deg); }
 }
