@@ -41,6 +41,13 @@
             </div>
         </template>
 
+        <template id="template-3">
+            <div id="error">
+                Your location is unavailable!
+                Only locations in the US are supported.
+            </div>
+        </template>
+
         <header>
             <h1>
                 MORROW WEATHER
@@ -66,30 +73,24 @@
                     </button>
                 </div>
             </div>
-            <div class="inside">
-                <div class="main-data">
+            <div class="inside" id="main-window-inside">
+                <div class="main-data" id="today">
                     <div id="left">
                         <div id="city-state">
-                            Clayton, MO
                         </div>
                         <div id="temperature">
-                            22º
                         </div>
                         <div id="date">
-                            2028
                         </div>
                     </div>
                     <div id="center">
                         <div id="precipitation">
-                            Probability of Precipitation: 26%
                         </div>
                         <div id="wind">
-                            Windspeed: 16mph
                         </div>
                     </div>
                     <div id="right">
                         <div id="short-forecast">
-                            Mostly Sunny
                         </div>
                         <img id="main-image" alt="weather-icon">
                     </div>

@@ -20,7 +20,7 @@ body {
     height: $pixel-unit*$size;
     
     &.active {
-        height: $margin-width*12;
+        height: $pixel-unit*12;
     }
     overflow: hidden;
 }
@@ -218,4 +218,13 @@ header {
 @keyframes tilt {
     from { transform: rotate(4deg); }
     to { transform: rotate(-4deg); }
+}
+
+.hidden {
+    display: none;
+}
+
+#error {
+    font-size: 3em;
+    font-weight: bold;
 }

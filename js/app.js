@@ -33,6 +33,26 @@ let current_longitude = -90.3093;
 let default_coordinates = `${current_latitude},${current_longitude}`
 const MORROW_HEADER = new Headers({"User-Agent": "Morrowbot/1.0 (+contactocarlose@gmail.com)"});
 
+var map = L.map('map').setView([current_latitude, current_longitude], 13);
+map.on('click', onMapClick);
+
+var marker = L.marker([current_latitude, current_longitude]).addTo(map);
+
+function onMapClick(e) {
+    let location = e.latlng;
+    marker.setLatLng(location);
+        
+    localStorage.setItem("user_latitude", location.lat);
+    localStorage.setItem("user_longitude", location.lng);
+    get_weather_data(location.lat, location.lng);
+}
+
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    referrerPolicy: 'no-referrer-when-downgrade'
+}).addTo(map);
+
 const MIN_GRAPH = 3;
 const MAX_GRAPH = 105;
 
@@ -49,6 +69,7 @@ if (is_user_location === null) {
 else {
     let user_latitude = localStorage.getItem("user_latitude");
     let user_longitude = localStorage.getItem("user_longitude");
+    marker.setLatLng([user_latitude, user_longitude]);
     get_weather_data(user_latitude, user_longitude);
 }
 
@@ -67,6 +88,11 @@ function update_location(position) {
 }
 
 function get_weather_data(latitude, longitude) {
+    try {
+        document.getElementById('error').remove();
+    }
+    catch {}
+
     const NWS_URL = "https://api.weather.gov/points";
 
     fetch(`${NWS_URL}/${latitude},${longitude}`, {
@@ -77,35 +103,29 @@ function get_weather_data(latitude, longitude) {
     })
     .then((data) => {
         console.log(data);
+        map.setView([latitude, longitude], 13); 
         update_weather_information(data);
-
-
-        var initialized = false;
-        if (!initialized) {
-            var map = L.map('map').setView([latitude, longitude], 13);
-            map.on('click', onMapClick);
-            var marker = L.marker([latitude, longitude]).addTo(map);
-        }
-        
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-            referrerPolicy: 'no-referrer-when-downgrade'
-        }).addTo(map);
-
-        function onMapClick(e) {
-            let location = e.latlng;
-            marker.setLatLng(location);
-
-            localStorage.setItem("user_latitude", location.lat);
-            localStorage.setItem("user_longitude", location.lng);
-            get_weather_data(location.lat, location.lng);
-        }
-        
+    })
+    .catch((error) => {
+        location_unavailable();
     });
 }
 
+function location_unavailable() {
+    console.log('Error: Location unavailable.');
+    document.getElementById('forecast-daily').classList.toggle('hidden');
+    document.getElementById('forecast-hourly').classList.toggle('hidden');
+    document.getElementById('today').classList.toggle('hidden');
+    let clone = document.getElementById('template-3').content.cloneNode(true);
+    document.getElementById('main-window-inside').appendChild(clone);
+}
+
 function update_weather_information(data) {
+
+    document.getElementById('forecast-daily').classList.remove('hidden');
+    document.getElementById('forecast-hourly').classList.remove('hidden');
+    document.getElementById('today').classList.remove('hidden');
+
     let properties = data.properties;
     let relative_location = properties.relativeLocation.properties;
     let city_state = `${relative_location.city}, ${relative_location.state}`;
