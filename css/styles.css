@@ -1,7 +1,9 @@
 body {
   font-family: "Courier New", Courier, monospace;
   color: #ffffff;
-  background-color: #218380;
+  min-height: 100vh;
+  background: linear-gradient(#218380, #c91ac9);
+  background-attachment: fixed;
 }
 
 #main {

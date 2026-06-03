@@ -9,7 +9,9 @@ $dark-text: pallete.$dark;
 body {
     font-family: 'Courier New', Courier, monospace;
     color: $light-text;
-    background-color: pallete.$teal;
+    min-height: 100vh;
+    background: linear-gradient(pallete.$teal, pallete.$magenta);
+    background-attachment: fixed;
 }
 
 @mixin movable-window($size) {
@@ -142,6 +144,7 @@ button {
     
 }
 
+// Class for both of the forecasts
 .data-array {
     display: flex;
     flex-direction: row;
@@ -168,6 +171,8 @@ button {
         width: $pixel-unit * 37;
     }
 
+    // The parts of the forecast per each day
+    
     #forecast-info {
         font-size: 0.75em;
         text-align: justify;

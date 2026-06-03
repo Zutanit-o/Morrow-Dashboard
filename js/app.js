@@ -63,6 +63,11 @@ let default_coordinates = `${current_latitude},${current_longitude}`
 // The NWS will email me if something goes wrong
 const MORROW_HEADER = new Headers({"User-Agent": "Morrowbot/1.0 (+contactocarlose@gmail.com)"});
 
+// Elements
+const daily_forecast_id = document.getElementById('forecast-daily');
+const hourly_forecast_id = document.getElementById('forecast-hourly');
+const todays_weather_id = document.getElementById('today');
+
 // Initializing leaflet map, events and current location marker
 var map = L.map('map').setView([current_latitude, current_longitude], 13);
 map.on('click', onMapClick);
@@ -147,9 +152,9 @@ function get_weather_data(latitude, longitude) {
 // If location isnt available, show message on screen
 function location_unavailable() {
     console.log('Error: Location unavailable.');
-    document.getElementById('forecast-daily').classList.toggle('hidden');
-    document.getElementById('forecast-hourly').classList.toggle('hidden');
-    document.getElementById('today').classList.toggle('hidden');
+    daily_forecast_id.classList.toggle('hidden');
+    hourly_forecast_id.classList.toggle('hidden');
+    todays_weather_id.classList.toggle('hidden');
     let clone = document.getElementById('template-3').content.cloneNode(true);
     document.getElementById('main-window-inside').appendChild(clone);
 }
@@ -157,9 +162,9 @@ function location_unavailable() {
 // Fetching daily and hourly forecast with the recieved link
 function update_weather_information(data) {
 
-    document.getElementById('forecast-daily').classList.remove('hidden');
-    document.getElementById('forecast-hourly').classList.remove('hidden');
-    document.getElementById('today').classList.remove('hidden');
+    daily_forecast_id.classList.remove('hidden');
+    hourly_forecast_id.classList.remove('hidden');
+    todays_weather_id.classList.remove('hidden');
 
     let properties = data.properties;
     let relative_location = properties.relativeLocation.properties;
@@ -289,3 +294,5 @@ function show_weather_snippet(location, temperature_info, forecast_info, image, 
     let clone_location = document.getElementById(location);
     clone_location.appendChild(clone);
 }
+
+// If i wanted to write performant code i would have stuck with C!

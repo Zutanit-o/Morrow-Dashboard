@@ -1,5 +1,6 @@
 @use "sass:color";
 
+// Colors used
 $teal: #218380;
 $alternative: #bac2c7;
 $ruby: #D81159;
@@ -8,6 +9,7 @@ $violet: #2200CC;
 $background: #0E008F;
 $light: #ffffff;
 $dark: #27282c;
+$magenta: #c91ac9;
 
 @mixin vert-margin($width) {
     margin-top: $width;
@@ -16,6 +18,7 @@ $dark: #27282c;
     padding-bottom: $width;
 }
 
+// Makes the border for the windows xp type windows
 @mixin border-3d($color, $contrast, $direction) {
     $dark: color.adjust($color, $lightness: $contrast*-1);
     $light: color.adjust($color, $lightness: $contrast);
