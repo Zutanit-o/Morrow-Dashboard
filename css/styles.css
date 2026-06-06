@@ -19,7 +19,7 @@ body {
   height: 225px;
 }
 #main.active {
-  height: 75px;
+  height: calc(43.75px + 2.55vw);
 }
 #main {
   overflow: hidden;
@@ -38,7 +38,7 @@ body {
   height: 325px;
 }
 #forecast-daily.active {
-  height: 75px;
+  height: calc(43.75px + 2.55vw);
 }
 #forecast-daily {
   overflow: hidden;
@@ -57,7 +57,7 @@ body {
   height: 331.25px;
 }
 #forecast-hourly.active {
-  height: 75px;
+  height: calc(43.75px + 2.55vw);
 }
 #forecast-hourly {
   overflow: hidden;
@@ -76,7 +76,7 @@ body {
   height: 468.75px;
 }
 #map-container.active {
-  height: 75px;
+  height: calc(43.75px + 2.55vw);
 }
 #map-container {
   overflow: hidden;
@@ -89,6 +89,10 @@ body {
   border-bottom-color: rgb(222.5976, 226.3544, 228.7024);
   border-right-color: rgb(222.5976, 226.3544, 228.7024);
   background-color: #ffffff;
+  margin-top: 0.375vw;
+  margin-bottom: 0.375vw;
+  padding-top: 0.375vw;
+  padding-bottom: 0.375vw;
 }
 
 .header {
@@ -135,7 +139,7 @@ button {
   display: block;
   margin: auto;
   margin-right: 0;
-  width: 2.5vw;
+  width: 31.25px;
   aspect-ratio: 1/1;
 }
 button:hover {
@@ -168,6 +172,7 @@ button:hover {
   background-color: #ffffff;
   width: 100px;
   aspect-ratio: 1/1;
+  background-color: #bac2c7;
 }
 .main-data #left {
   text-align: left;
@@ -176,10 +181,10 @@ button:hover {
 }
 .main-data #left #temperature {
   font-weight: bold;
-  font-size: 4.5em;
+  font-size: clamp(1.2em, 5.5vw, 5em);
 }
 .main-data #left #city-state {
-  font-size: 1.75em;
+  font-size: clamp(1.15em, 2.15vw, 1.8em);
 }
 .main-data #center {
   font-size: 1.1em;
@@ -250,6 +255,8 @@ button:hover {
   display: block;
   margin-left: auto;
   margin-right: auto;
+  aspect-ratio: 1/1;
+  width: 90px;
 }
 
 .weather-graph {
@@ -285,6 +292,10 @@ button:hover {
 }
 .hourly-forecast button, .hourly-forecast #forecast-info {
   display: none;
+}
+.hourly-forecast img {
+  aspect-ratio: 1/1;
+  width: 65px;
 }
 
 header {

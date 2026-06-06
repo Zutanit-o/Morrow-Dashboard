@@ -51,6 +51,45 @@ function direction(string) {
     }
 }
 
+//Helper function to get the correct weather icon
+function get_image(string, is_daytime) {
+    string = string.toLowerCase();
+    if (string.includes('thunder')) {
+        return "img/thunder.png";
+    }
+    else if (string.includes('shower')) {
+        return "img/rain.png";
+    }
+    else if (string.includes('snow') || string.includes('ice')) {
+        return "img/snow.png";
+    }
+    else if  (string.includes('mostly cloudy') || string == "cloudy") {
+        return "img/cloudy.png";
+    }
+    else if (!is_daytime) {
+        if (string.includes('partly cloudy')) {
+            return "img/mostly_cloudy_night.png";
+        }
+        else if (string.includes('partly')) {
+            return "img/mostly_clear_night.png";
+        }
+        else {
+            return "img/clear_night.png";
+        }
+    }
+    else {
+        if (string.includes('partly cloudy')) {
+            return "img/mostly_cloudy_day.png";
+        }
+        else if (string.includes('partly')) {
+            return "img/mostly_clear_day.png";
+        }
+        else {
+            return "img/clear_day.png";
+        }
+    }
+}
+
 let daily_data;
 let hourly_data;
 
@@ -214,7 +253,7 @@ function update_hourly_information(data, day) {
         show_weather_snippet("hourly-forecast", 
                             period.temperature,
                             period.shortForecast,
-                            period.icon,
+                            get_image(period.shortForecast, period.isDaytime),
                             parse(period.startTime).time,
                             data,
         );
@@ -234,10 +273,11 @@ function update_forecast_information(data) {
     let periods = data.properties.periods;
     let ammount = periods.length;
     let current_weather = periods[0];
+    let short_forecast = current_weather.shortForecast
 
     document.getElementById("temperature").innerText = `${current_weather.temperature} ºF`;
-    document.getElementById("short-forecast").innerText = current_weather.shortForecast;
-    document.getElementById("main-image").src = current_weather.icon;
+    document.getElementById("short-forecast").innerText = short_forecast;
+    document.getElementById("main-image").src = get_image(short_forecast, current_weather.isDaytime);
     document.getElementById("date").innerText = `At ${parse(current_weather.startTime).date_time}`;
     document.getElementById("precipitation").innerText = `Probability of Precipitation:\n${current_weather.probabilityOfPrecipitation.value}%`;
     document.getElementById("wind-speed").innerText = `Wind Speed:\n${current_weather.windSpeed}`;
@@ -249,7 +289,7 @@ function update_forecast_information(data) {
         show_weather_snippet("daily-forecast", 
                             period.temperature, 
                             period.detailedForecast,
-                            period.icon,
+                            get_image(period.shortForecast, period.isDaytime),
                             period.name,
                             i);
     }

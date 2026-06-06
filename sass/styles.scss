@@ -22,7 +22,7 @@ body {
     height: $pixel-unit*$size;
     
     &.active {
-        height: $pixel-unit*12;
+        height: calc($pixel-unit*7 + $margin-width*5.1);
     }
     overflow: hidden;
 }
@@ -45,6 +45,7 @@ body {
     #map { 
         height: $pixel-unit*59;
         @include pallete.inset(3, pallete.$alternative, 13%, pallete.$light);
+        @include pallete.vert-margin($margin-width*0.75);
     }
 }
 
@@ -86,7 +87,7 @@ button {
     margin: auto;
     margin-right: 0;
 
-    width: $margin-width*5;
+    width: $pixel-unit*5;
     aspect-ratio: 1/1;
 
     &:hover {
@@ -109,6 +110,7 @@ button {
             @include pallete.inset(3, pallete.$alternative, 13%, pallete.$light);
             width: 100px;
             aspect-ratio: 1/1;
+            background-color: pallete.$alternative;
         }
     }
 
@@ -118,10 +120,10 @@ button {
         grid-template-columns: 1fr, 3fr;
         #temperature {
             font-weight: bold;
-            font-size: 4.5em;
+            font-size: clamp(1.2em, $margin-width*11, 5em);
         }
         #city-state{
-            font-size: 1.75em;
+            font-size: clamp(1.15em, $margin-width*4.3, 1.8em);
         }
     }
 
@@ -195,6 +197,8 @@ button {
             display: block;
             margin-left: auto;
             margin-right: auto;
+            aspect-ratio: 1/1;
+            width: 90px;
         }
     }
 }
@@ -223,6 +227,11 @@ button {
 
     button, #forecast-info {
         display: none;
+    }
+
+    img {
+        aspect-ratio: 1/1;
+        width: 65px;
     }
 }
 
