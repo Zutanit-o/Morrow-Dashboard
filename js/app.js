@@ -25,6 +25,29 @@ function parse(string) {
     return final_date
 }
 
+// Utility function to convert wind speed to wind sock image
+function get_wind_img(string) {
+    let windspeed = parseInt(string.slice(0, 2), 10);
+    if (windspeed >= 17) {
+        return "img/wind_sock_1.png";
+    }
+    else if (windspeed >= 14) {
+        return "img/wind_sock_2.png";
+    }
+    else if (windspeed >= 10) {
+        return "img/wind_sock_3.png";
+    }
+    else if (windspeed >= 7) {
+        return "img/wind_sock_4.png";
+    }
+    else if (windspeed >= 3.5) {
+        return "img/wind_sock_5.png";
+    }
+    else {
+        return "img/wind_sock_6.png";
+    }
+}
+
 // Utility to turn cardinal directions to arrows
 function direction(string) {
     let direction = string.slice(-2);
@@ -57,11 +80,11 @@ function get_image(string, is_daytime) {
     if (string.includes('thunder')) {
         return "img/thunder.png";
     }
-    else if (string.includes('shower')) {
-        return "img/rain.png";
-    }
     else if (string.includes('snow') || string.includes('ice')) {
         return "img/snow.png";
+    }
+    else if (string.includes('shower') || string.includes('rain')) {
+        return "img/rain.png";
     }
     else if  (string.includes('mostly cloudy') || string == "cloudy") {
         return "img/cloudy.png";
@@ -242,28 +265,42 @@ function update_weather_information(data) {
 // Updating the hourly forecast frontend section
 function update_hourly_information(data, day) {
     let periods = data.properties.periods;
+    let periods_length = periods.length;
 
     document.getElementById("hourly-forecast").innerHTML = "";
     document.getElementById("hourly-graph").innerHTML = "";
     let max = -100;
     let min = 200;
 
-    for(let i = 0; i < 12; i++) {
-        period = periods[i + day*12];
-        show_weather_snippet("hourly-forecast", 
+    let start_periods = 0
+    start_periods = 0;
+    let time = ""
+    while (time != "18:00" && time != "06:00") {
+        start_periods++;
+        time = parse(periods[start_periods].startTime).time;
+    }
+
+    let total_periods = (day == 0) ? Math.max(6, start_periods) : 12;
+    let index_offset = (day == 0) ? 0 : start_periods + (day - 1) * 12;
+
+    for(let i = 0; i < total_periods; i++) {
+        let index = Math.min(i + index_offset, periods_length - 1);
+        period = periods[index];
+        show_weather_snippet("hourly-forecast",
                             period.temperature,
                             period.shortForecast,
                             get_image(period.shortForecast, period.isDaytime),
                             parse(period.startTime).time,
-                            data,
+                            day,
         );
 
         max = (period.temperature > max) ? period.temperature : max;
         min = (period.temperature < min) ? period.temperature : min;
     }
 
-    for(let i = 0; i < 12; i++) {
-        period = periods[i + day*12];
+    for(let i = 0; i < total_periods; i++) {
+        let index = Math.min(i + index_offset, periods_length - 1);
+        period = periods[index];
         show_column("hourly-graph", (period.temperature - min) * (MAX_GRAPH - MIN_GRAPH) / (max - min) + MIN_GRAPH);
     }
 }
@@ -275,13 +312,14 @@ function update_forecast_information(data) {
     let current_weather = periods[0];
     let short_forecast = current_weather.shortForecast
 
-    document.getElementById("temperature").innerText = `${current_weather.temperature} ºF`;
+    document.getElementById("temperature").innerText = `${current_weather.temperature} F`;
     document.getElementById("short-forecast").innerText = short_forecast;
     document.getElementById("main-image").src = get_image(short_forecast, current_weather.isDaytime);
     document.getElementById("date").innerText = `At ${parse(current_weather.startTime).date_time}`;
     document.getElementById("precipitation").innerText = `Probability of Precipitation:\n${current_weather.probabilityOfPrecipitation.value}%`;
     document.getElementById("wind-speed").innerText = `Wind Speed:\n${current_weather.windSpeed}`;
     document.getElementById("wind-direction").innerText = `Wind Direction:\n${direction(current_weather.windDirection)}`;
+    document.getElementById("wind-sock-img").src = get_wind_img(current_weather.windSpeed);
 
     document.getElementById("daily-forecast").innerHTML = "";
     for(let i = 0; i < ammount; i++) {
@@ -326,7 +364,7 @@ function show_weather_snippet(location, temperature_info, forecast_info, image, 
         update_hourly_information(hourly_data, period);
     });
 
-    temperature.innerText = temperature_info + ' ºF';
+    temperature.innerText = temperature_info + ' F';
     forecast.innerText = formated_forecast;
     image_obj.src = image;
     date_obj.innerText = date;

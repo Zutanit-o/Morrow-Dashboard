@@ -6,8 +6,16 @@ $pixel-unit: 6.25px;
 $light-text: pallete.$light;
 $dark-text: pallete.$dark;
 
+@font-face {
+  font-family: 'W95FA';
+  src: url('../fonts/w95f.woff2') format('woff2'), url('../fonts/w95f.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 body {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'W95FA';
     color: $light-text;
     min-height: 100vh;
     background: linear-gradient(pallete.$teal, pallete.$magenta);
@@ -22,25 +30,25 @@ body {
     height: $pixel-unit*$size;
     
     &.active {
-        height: calc($pixel-unit*7 + $margin-width*5.1);
+        height: calc($pixel-unit*7 + $margin-width*4.8);
     }
     overflow: hidden;
 }
 
 #main {
-    @include movable-window(36)
+    @include movable-window(40)
 }
 
 #forecast-daily {
-    @include movable-window(52)
+    @include movable-window(54)
 }
 
 #forecast-hourly {
-    @include movable-window(53)
+    @include movable-window(55)
 }
 
 #map-container {
-    @include movable-window(75);
+    @include movable-window(80);
 
     #map { 
         height: $pixel-unit*59;
@@ -75,6 +83,7 @@ body {
 
 .inside {
     padding: $margin-width*3;
+    padding-top: $margin-width*4;
     padding-bottom: 0;
     color: $dark-text;
 }
@@ -96,21 +105,34 @@ button {
 }
 
 .main-data {
+    overflow: auto;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 2fr 3fr 3fr;
     gap: $margin-width $margin-width*3;
     align-items: center;
 
     #right {
         text-align: right;
-        display: flex;
         justify-content: flex-end;
+        display: flex;
+        #main-forecast-data {
+            display: flex;
+            flex-direction: column;
+            gap: $margin-width;
+            #short-forecast {
+                font-size: clamp(1em, 2cqw, 3em);
+                font-weight: bold;
+            }
+        }
         img {
             margin-left: $margin-width*2;
             @include pallete.inset(3, pallete.$alternative, 13%, pallete.$light);
-            width: 100px;
-            aspect-ratio: 1/1;
+            width: 110px;
+            height: 110px;
             background-color: pallete.$alternative;
+            display: block;
+            margin-top: auto;
+            margin-bottom: auto;
         }
     }
 
@@ -128,19 +150,19 @@ button {
     }
 
     #center {
-        font-size: 1.1em;
-        gap: $margin-width*2.2;
+        font-size: clamp(1em, $margin-width*3.7, 1.7em);
+        flex-grow: 1;
+        gap: $margin-width*3;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         text-align: center;
+        justify-content: center;
 
-        #wind {
-            display: flex;
-            flex-direction: row;
-            gap: $margin-width*2.2;
-            div {
-                flex-grow: 1;
-            }
+        img {
+            @include pallete.inset(3, pallete.$alternative, 13%, pallete.$light);
+            width: 80px;
+            height: 80px;
+            background-color: pallete.$alternative;
         }
     }
     
@@ -176,7 +198,7 @@ button {
     // The parts of the forecast per each day
     
     #forecast-info {
-        font-size: 0.75em;
+        font-size: 0.9em;
         text-align: justify;
         overflow-y: auto;
         overflow-x: hidden;
@@ -187,10 +209,11 @@ button {
         flex-direction: column;
         align-items: center;
         text-align: center;
-        font-weight: bold;
+        font-size: 1em;
 
         #temperature-info {
-            font-size: 1.1em;
+            font-size: 1.2em;
+            font-weight: bold;
         }
 
         img {
@@ -241,14 +264,14 @@ header {
     h1 {
         font-size: 5.5em;
         animation: tilt 1s infinite alternate;
-        margin: $margin-width*3;
+        margin: $margin-width*6;
     }
     
 }
 
 @keyframes tilt {
-    from { transform: rotate(4deg); }
-    to { transform: rotate(-4deg); }
+    from { transform: rotate(2deg); }
+    to { transform: rotate(-2deg); }
 }
 
 .hidden {

@@ -1,5 +1,12 @@
+@font-face {
+  font-family: "W95FA";
+  src: url("../fonts/w95f.woff2") format("woff2"), url("../fonts/w95f.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 body {
-  font-family: "Courier New", Courier, monospace;
+  font-family: "W95FA";
   color: #ffffff;
   min-height: 100vh;
   background: linear-gradient(#218380, #c91ac9);
@@ -16,10 +23,10 @@ body {
   padding: 1.5vw;
   margin: 1.5vw;
   transition: 0.9s cubic-bezier(0.165, 0.84, 0.44, 1);
-  height: 225px;
+  height: 250px;
 }
 #main.active {
-  height: calc(43.75px + 2.55vw);
+  height: calc(43.75px + 2.4vw);
 }
 #main {
   overflow: hidden;
@@ -35,10 +42,10 @@ body {
   padding: 1.5vw;
   margin: 1.5vw;
   transition: 0.9s cubic-bezier(0.165, 0.84, 0.44, 1);
-  height: 325px;
+  height: 337.5px;
 }
 #forecast-daily.active {
-  height: calc(43.75px + 2.55vw);
+  height: calc(43.75px + 2.4vw);
 }
 #forecast-daily {
   overflow: hidden;
@@ -54,10 +61,10 @@ body {
   padding: 1.5vw;
   margin: 1.5vw;
   transition: 0.9s cubic-bezier(0.165, 0.84, 0.44, 1);
-  height: 331.25px;
+  height: 343.75px;
 }
 #forecast-hourly.active {
-  height: calc(43.75px + 2.55vw);
+  height: calc(43.75px + 2.4vw);
 }
 #forecast-hourly {
   overflow: hidden;
@@ -73,10 +80,10 @@ body {
   padding: 1.5vw;
   margin: 1.5vw;
   transition: 0.9s cubic-bezier(0.165, 0.84, 0.44, 1);
-  height: 468.75px;
+  height: 500px;
 }
 #map-container.active {
-  height: calc(43.75px + 2.55vw);
+  height: calc(43.75px + 2.4vw);
 }
 #map-container {
   overflow: hidden;
@@ -124,6 +131,7 @@ body {
 
 .inside {
   padding: 1.5vw;
+  padding-top: 2vw;
   padding-bottom: 0;
   color: #27282c;
 }
@@ -152,15 +160,25 @@ button:hover {
 }
 
 .main-data {
+  overflow: auto;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 2fr 3fr 3fr;
   gap: 0.5vw 1.5vw;
   align-items: center;
 }
 .main-data #right {
   text-align: right;
-  display: flex;
   justify-content: flex-end;
+  display: flex;
+}
+.main-data #right #main-forecast-data {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5vw;
+}
+.main-data #right #main-forecast-data #short-forecast {
+  font-size: clamp(1em, 2cqw, 3em);
+  font-weight: bold;
 }
 .main-data #right img {
   margin-left: 1vw;
@@ -170,9 +188,12 @@ button:hover {
   border-bottom-color: rgb(222.5976, 226.3544, 228.7024);
   border-right-color: rgb(222.5976, 226.3544, 228.7024);
   background-color: #ffffff;
-  width: 100px;
-  aspect-ratio: 1/1;
+  width: 110px;
+  height: 110px;
   background-color: #bac2c7;
+  display: block;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 .main-data #left {
   text-align: left;
@@ -187,19 +208,24 @@ button:hover {
   font-size: clamp(1.15em, 2.15vw, 1.8em);
 }
 .main-data #center {
-  font-size: 1.1em;
-  gap: 1.1vw;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-}
-.main-data #center #wind {
+  font-size: clamp(1em, 1.85vw, 1.7em);
+  flex-grow: 1;
+  gap: 1.5vw;
   display: flex;
   flex-direction: row;
-  gap: 1.1vw;
+  text-align: center;
+  justify-content: center;
 }
-.main-data #center #wind div {
-  flex-grow: 1;
+.main-data #center img {
+  border: 3px solid;
+  border-top-color: rgb(149.4024, 161.6456, 169.2976);
+  border-left-color: rgb(149.4024, 161.6456, 169.2976);
+  border-bottom-color: rgb(222.5976, 226.3544, 228.7024);
+  border-right-color: rgb(222.5976, 226.3544, 228.7024);
+  background-color: #ffffff;
+  width: 80px;
+  height: 80px;
+  background-color: #bac2c7;
 }
 
 .data-array, .weather-graph {
@@ -236,7 +262,7 @@ button:hover {
   width: 231.25px;
 }
 .daily-forecast #forecast-info {
-  font-size: 0.75em;
+  font-size: 0.9em;
   text-align: justify;
   overflow-y: auto;
   overflow-x: hidden;
@@ -246,10 +272,11 @@ button:hover {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  font-weight: bold;
+  font-size: 1em;
 }
 .daily-forecast .weather-thumbnail #temperature-info {
-  font-size: 1.1em;
+  font-size: 1.2em;
+  font-weight: bold;
 }
 .daily-forecast .weather-thumbnail img {
   display: block;
@@ -305,15 +332,15 @@ header {
 header h1 {
   font-size: 5.5em;
   animation: tilt 1s infinite alternate;
-  margin: 1.5vw;
+  margin: 3vw;
 }
 
 @keyframes tilt {
   from {
-    transform: rotate(4deg);
+    transform: rotate(2deg);
   }
   to {
-    transform: rotate(-4deg);
+    transform: rotate(-2deg);
   }
 }
 .hidden {
