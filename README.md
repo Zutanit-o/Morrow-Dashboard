@@ -7,7 +7,7 @@ There is a live demo up at https://morrow-dashboard.vercel.app/!
 
 ## Description
 
-The dashboard has sections for hourly and daily forecast, including a small graph for each day or night you choose. The icons for weather conditions were made by me.
+The dashboard has sections for hourly and daily forecast, including precipitation and cloudyness, and has a small graph for the temperature for each day or night you choose. It can only provide information about weather in the US! The icons for weather conditions were made by me.
 
 On a cellphone:
 ![demo-img1](img/demo-img1.jpg)
