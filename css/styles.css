@@ -217,6 +217,7 @@ button:hover {
   justify-content: center;
 }
 .main-data #center img {
+  font-size: 0.4em;
   border: 3px solid;
   border-top-color: rgb(149.4024, 161.6456, 169.2976);
   border-left-color: rgb(149.4024, 161.6456, 169.2976);

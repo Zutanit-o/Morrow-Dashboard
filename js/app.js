@@ -284,7 +284,10 @@ function update_hourly_information(data, day) {
     let index_offset = (day == 0) ? 0 : start_periods + (day - 1) * 12;
 
     for(let i = 0; i < total_periods; i++) {
-        let index = Math.min(i + index_offset, periods_length - 1);
+        let index = i + index_offset
+        if (index > periods_length - 1) {
+            continue
+        }
         period = periods[index];
         show_weather_snippet("hourly-forecast",
                             period.temperature,
@@ -299,7 +302,10 @@ function update_hourly_information(data, day) {
     }
 
     for(let i = 0; i < total_periods; i++) {
-        let index = Math.min(i + index_offset, periods_length - 1);
+        let index = i + index_offset
+        if (index > periods_length - 1) {
+            continue
+        }
         period = periods[index];
         show_column("hourly-graph", (period.temperature - min) * (MAX_GRAPH - MIN_GRAPH) / (max - min) + MIN_GRAPH);
     }

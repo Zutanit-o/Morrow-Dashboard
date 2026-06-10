@@ -9,9 +9,15 @@ There is a live demo up at https://morrow-dashboard.vercel.app/!
 
 The dashboard has sections for hourly and daily forecast, including a small graph for each day or night you choose. The icons for weather conditions were made by me.
 
-![demo-img](img/demo-img.jpg)
+On a cellphone:
+![demo-img1](img/demo-img1.jpg)
+
+On a PC:
+![demo-img2](img/demo-img2.png)
+![demo-img3](img/demo-img3.png)
 
 This is my first web project! So I was motivated to learn about APIs, frontend development and other things about web applications. I *did* get the idea for a weather dashboard form ChatGPT but other than that everything was made by me AI free. Could I have made this with a JavaScript framework to avoid all the spaghetti code? Maybe. As I said I don't do web development often.
+
 ## How it works
 
 The website automatically detects your location through the JavaScript geolocation api tho you can input another one in the map section at the bottom.

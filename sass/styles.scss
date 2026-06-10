@@ -159,6 +159,7 @@ button {
         justify-content: center;
 
         img {
+            font-size: 0.4em;
             @include pallete.inset(3, pallete.$alternative, 13%, pallete.$light);
             width: 80px;
             height: 80px;
